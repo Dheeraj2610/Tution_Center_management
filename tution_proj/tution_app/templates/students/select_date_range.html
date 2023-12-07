@@ -1,0 +1,56 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Date Range for Attendance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            margin: 0 auto;
+            width: 300px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="date"], input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select Date Range for Attendance</h1>
+    <form method="post" action="{% url 'view_stu_attendance_admin' %}">
+        {% csrf_token %}
+        <label for="start_date">Start Date:</label>
+        <input type="date" name="start_date">
+    
+        <label for="end_date">End Date:</label>
+        <input type="date" name="end_date">
+    
+        <input type="submit" value="View Attendance">
+    </form>
+</body>
+</html>
+{% endblock %}

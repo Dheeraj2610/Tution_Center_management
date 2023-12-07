@@ -1,0 +1,84 @@
+{% extends 'teacher/teacher_base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submitted Assignments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin: 0;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            margin-top: 20px;
+        }
+        table {
+            width: max-content; /* Enable table to expand beyond the container width */
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        th, td {
+            border: 1px solid rgb(36, 35, 35);
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #86a8ac;
+        }
+        .no-file {
+            color: #888;
+        }
+        
+
+
+    </style>
+</head>
+<body>
+    <h2>{{ teacher.username }} - Submitted Assignments</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Description</th>
+                    <th>Submission Time</th>
+                    <th>Submitted File</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for assignment in student_assignments %}
+                <tr>
+                    <td>{{ assignment.submitted_by.student.username }}</td>
+                    <td>{{ assignment.description }}</td>
+                    <td>{{ assignment.submission_date }}</td>
+                    <td>
+                        {% if assignment.submitted_file %}
+                            <a href="{{ assignment.submitted_file.url }}">{{ assignment.submitted_file.name }}</a>
+                        {% else %}
+                            <span class="no-file">No file submitted</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+{% endblock %}

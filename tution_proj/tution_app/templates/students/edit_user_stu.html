@@ -1,0 +1,73 @@
+<html lang="en">
+    <head>
+        <title>
+            Image
+        </title>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"> 
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+        <body style="background-color: rgb(241, 245, 245);">
+           
+             <div class="container mt-5">
+                <h1 class="alert alert-info text-center">Edit User Details</h1>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <form method="post" action="{% url 'edit_user_stu' student.id %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <h6>Username:</h6>
+                            <input type="text" name="username" class="form-control mt-3" value="{{ user.username }}" readonly>
+                            <h6>First Name:</h6>
+                            <input type="text" name="first_name" class="form-control mt-3" value="{{ user.first_name }}">
+                            <h6>Last Name:</h6>
+                            <input type="text" name="last_name" class="form-control mt-3" value="{{ user.last_name }}">
+                            <h6>Email:</h6>
+                            <input type="text" name="email" class="form-control mt-3" value="{{ user.email }}">
+                            <!-- Other user details -->
+                            <h6>Address:</h6>
+                            <input type="text" name="address" class="form-control mt-3" value="{{ student.Std_address }}">
+                            <h6>Gender:</h6>
+                            <input type="radio" name="gender" value="Male" {% if student.std_gender == 'Male' %}checked{% endif %}>
+                            <label>MALE</label>
+                            <input type="radio" name="gender" value="Female" {% if student.std_gender == 'Female' %}checked{% endif %}>
+                            <label>Female</label>
+                            <input type="radio" name="gender" value="Other" {% if student.std_gender == 'Other' %}checked{% endif %}>
+                            <label>Other</label>
+                            <h6>Age:</h6>
+                            <input type="text" name="age" class="form-control mt-3" value="{{ student.Std_age }}">
+                            <h6>Phone:</h6>
+                            <input type="text" name="phone" class="form-control mt-3" value="{{ student.std_phone }}">
+                            <h6>Depaetment:</h6>
+                            <select class="form-control" name="select" id="qwerty">
+                                {% for i in department %}
+                                    <option value="{{ i.id }}">{{ i.dept_name }}</option>
+                                {% endfor %}
+                            </select>
+                            <h6>Image:</h6>
+                            {% if student.std_image %}
+                                <img src="{{ student.std_image.url }}" class="w-25"><br>
+                            {% else %}
+                                <img src="{% static 'images/default.png' %}" class="w-25">
+                            {% endif %}
+                            <input type="file" name="file" class="form-control mt-3" accept="image/*">
+                            <button type="submit" class="btn btn-info mt-3 w-100">SAVE CHANGES</button>
+                        </form>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </div>
+            
+        </body>
+        </html>

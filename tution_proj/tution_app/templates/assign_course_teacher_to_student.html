@@ -1,0 +1,143 @@
+
+{% extends 'admin_base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Course and Teacher to Student</title>
+    <!-- <link rel="stylesheet" href="path/to/your/css/styles.css"> -->
+    <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+select,
+button {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
+}
+
+.success-message {
+    color: #4caf50;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+
+<h2>Assign Course and Teacher to Student</h2>
+<form method="post" action="{% url 'assign_course_teacher_to_student' %}" id="assignForm">
+  {% csrf_token %}
+  
+  <div class="form-group">
+    <label for="course_id">Select Course:</label>
+    <select name="course_id" id="courseSelect">
+      {% for course in courses %}
+        <option value="{{ course.id }}">{{ course.cs_name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="teacher_id">Select Teacher:</label>
+    <select name="teacher_id" id="teacherSelect">
+      <!-- Options will be dynamically populated based on the selected course using JavaScript -->
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="student_id">Select Student:</label>
+    <select name="student_id">
+      {% for student in students %}
+        <option value="{{ student.id }}">{{ student.student.username }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <button type="submit">Assign</button>
+  </div>
+  
+  {% if messages %}
+    {% for message in messages %}
+      <label for="message" class="success-message">{{ message }}</label>
+    {% endfor %}
+  {% endif %}
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+$(document).ready(function() {
+  // On page load, populate the teacher dropdown based on the initial selected course
+  updateTeachers();
+
+  // Bind the updateTeachers function to the change event of the course dropdown
+  $('#courseSelect').change(function() {
+    updateTeachers();
+  });
+
+  function updateTeachers() {
+    var selectedCourseId = $('#courseSelect').val();
+
+    // Make an AJAX request to fetch the teachers for the selected course
+    $.ajax({
+      type: 'GET',
+      url: '{% url "get_teachers" %}',  // Ensure this URL is correctly generated
+      data: { 'course_id': selectedCourseId },
+      success: function(data) {
+        // Clear existing options
+        $('#teacherSelect').empty();
+
+        // Populate options based on the response data
+        $.each(data.teachers, function(index, teacher) {
+          $('#teacherSelect').append('<option value="' + teacher.id + '">' + teacher.username + '</option>');
+        });
+      },
+      error: function(xhr, status, error) {
+        console.error('Error fetching teachers:', error);
+      }
+    });
+  }
+});
+</script>
+
+</body>
+</html>
+{% endblock %}

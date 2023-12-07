@@ -1,0 +1,124 @@
+{% extends 'teacher/teacher_base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details</title>
+    <style media="screen">
+        a:link {
+            text-decoration: none;
+        }
+        h2, h6 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .panel {
+            margin-bottom: 30px;
+            width: 100%;
+        }
+                .table-responsive {
+        width: 100%;
+        overflow-x: scroll; /* Add horizontal scrolling to the table container */
+        }
+        .table {
+            
+            overflow-x: auto; /* Allow tables to be scrolled horizontally on small screens */
+           
+            border-collapse: collapse;
+            margin: 0 auto; /* Center the table horizontally */
+            width: auto;
+        }
+        th, td {
+            padding: 8px; /* Reduced padding for cells */
+            text-align: center;
+            white-space: nowrap; /* Prevent line breaks in table cells */
+        }
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+        p {
+            margin: 10px 0;
+        }
+        p strong {
+            margin-right: 10px;
+        }
+        .container {
+            margin: 20px auto;
+            width: 69%;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #ffffff;
+            overflow-x: auto; /* Add horizontal scrolling to the entire container */
+        }
+        @media (max-width: 768px) {
+            .container {
+            margin: 20px auto;
+            width: auto;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #ffffff;
+            overflow-x: auto; /* Add horizontal scrolling to the entire container */
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-primary"> 
+            <div class="panel-heading">
+                <h6 class="panel-title">Student Details ({{ course.cs_name }})</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Gender</th>
+                            <th>Age</th>
+                            <th>Phone</th>
+                            <th>Department</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in students %}
+                        <tr>
+                            <td>{{ s.student.first_name }}</td>
+                            <td>{{ s.student.last_name }}</td>
+                            <td>{{ s.student.email }}</td>
+                            <td>{{ s.Std_address }}</td>
+                            <td>{{ s.std_gender }}</td>
+                            <td>{{ s.Std_age }}</td>
+                            <td>{{ s.std_phone }}</td>
+                            <td>{{ s.department.dept_name }}</td>
+                            <td>
+                                {% if s.std_image %}
+                                <img src="{{ s.std_image.url }}" alt="Student Image">
+                                {% else %}
+                                <img src="{% static 'images/default.png' %}" alt="Default Image">
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

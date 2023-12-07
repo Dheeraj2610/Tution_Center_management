@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+</head>
+<body>
+    <h1>Student Details</h1>
+    <h2>Student Name: {{ student.student.username }}</h2>
+    <p>Address: {{ student.Std_address }}</p>
+    <p>Age: {{ student.Std_age }}</p>
+    <p>Gender: {{ student.std_gender }}</p>
+    <!-- Add more details as needed -->
+    
+    <h2>Assigned Teacher: {{ student.assign_tchr.teacher.username }}</h2>
+    <h2>Assigned Course: {{ student.course.cs_name }}</h2>
+    <!-- Display assigned teacher and course details -->
+</body>
+</html>

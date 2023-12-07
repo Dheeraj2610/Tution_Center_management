@@ -1,0 +1,97 @@
+{% extends 'teacher/teacher_base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Details for {{ selected_date }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 50%;
+            border-collapse:collapse;
+            margin-bottom: 20px;
+            margin: 0 auto;
+            
+        }
+        th, td {
+            padding: 10px;
+            text-align:center;
+            border-bottom: 1px solid rgb(4, 4, 4);
+        }
+        th {
+            background-color: #212b2d;
+            border-bottom: 2px solid #3d3636;
+            color: #ffffff;
+        }
+        @media screen and (max-width: 600px) {
+            table {
+                overflow-x: auto;
+            }
+            table, th, td {
+                border: none;
+            }
+            table thead {
+                display: none;
+            }
+            table, tr, td {
+                display: block;
+            }
+            td {
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                text-align: left;
+                margin-bottom: 5px;
+            }
+        }
+        p {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Student Attendance Details for {{ selected_date }}</h2>
+    {% if attendance %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Attendance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance %}
+                    <tr>
+                        <td data-label="Student Name">{{ record.student.student.first_name }}</td>
+                        <td data-label="Attendance">
+                            {% if record.is_present %}
+                                Present
+                            {% else %}
+                                Absent
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No attendance details available for the selected date.</p>
+    {% endif %}
+</body>
+</html>
+{% endblock %}

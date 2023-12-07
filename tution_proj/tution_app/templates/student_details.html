@@ -1,0 +1,115 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <style media="screen">
+        a:link {
+            text-decoration: none;
+        }
+        h6{
+            text-align:center;
+        }
+        .row{
+            margin:100px;
+        }
+    </style>
+</head>
+
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h6 class="panel-title">Students</h6>
+            </div>
+
+            <table class="table table-hover table-striped table-bordered" id="dev-table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Phone</th>
+                        <th>Department</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                
+                {% for s in stds %}
+                <tr>
+                    <td>{{ s.student.first_name }}</td>
+                    <td>{{ s.student.last_name }}</td>
+                    <td>{{ s.student.email }}</td>
+                    <td>{{ s.Std_address }}</td>
+                    <td>{{ s.std_gender }}</td>
+                    <td>{{ s.Std_age }}</td>
+                    <td>{{ s.std_phone }}</td>
+                    <td>{{ s.department.dept_name}}
+                    <!-- <td>{{ s.course.cs_name }}</td> -->
+                    <td>
+                        {% if s.std_image %}
+                            <img src="{{ s.std_image.url }}" style="width: 100px; height: 100px;"> <!-- Adjust width and height as needed -->
+                        {% else %}
+                            
+                            <img src="{% static 'images/default.png' %}" style="width: 100px; height: 100px;"> <!-- Adjust width and height as needed -->
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="{% url 'edit_student_page' s.id %}"><span class="glyphicon glyphicon-edit"></span></a>
+                        
+                        
+
+                    
+                        <a class="btn btn-danger btn-xs delete-Student-btn" data-student-id="{{ s.id }}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Delete Confirmation -->
+<div class="modal fade" id="deleteStudentModal" tabindex="-1" role="dialog" aria-labelledby="deleteStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteStudentModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this Student?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a id="deleteStudentBtn" class="btn btn-danger" href="#">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $(".delete-Student-btn").on("click", function() {
+            var studentId = $(this).data('student-id');
+            $("#deleteStudentBtn").attr("href", "/delete_student/" + studentId + "/");
+            $('#deleteStudentModal').modal('show');
+        });
+    });
+</script>
+
+
+{% endblock %}
+

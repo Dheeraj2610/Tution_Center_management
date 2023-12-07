@@ -1,0 +1,84 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            text-align: center;
+            color: #333;
+           
+        }
+
+        ul.notifications {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.notifications li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+        }
+
+        ul.notifications li input {
+            margin-right: 10px;
+        }
+
+        button.delete-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.delete-btn:hover {
+            background-color: #cc0000;
+        }
+        form{
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            form {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            form {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Notifications</h1>
+    <form method="post" action="{% url 'delete_selected_notifications' %}">
+        {% csrf_token %}
+        <ul class="notifications">
+            {% for notification in notifications %}
+                <li>
+                    <input type="checkbox" name="selected_notifications" value="{{ notification.id }}">
+                    <span>{{ notification.notification_type }} - {{ notification.user.username }} ({{ notification.created_at }})</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="submit" class="delete-btn">Delete Selected Notifications</button>
+    </form>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<!-- assign_course.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+    
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        h1 {
+            color: #333;
+        }
+    
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+    
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    
+        input[type="hidden"] {
+            display: none;
+        }
+    
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="post" action="{% url 'assign_course' %}">
+            {% csrf_token %}
+            <h1>Select Teacher and Student</h1>
+            
+            <label for="teacher">Select Teacher:</label>
+            <select name="teacher_id">
+                {% for teacher in teachers %}
+                    <option value="{{ teacher.id }}">{{ teacher.teacher }}</option>
+                {% endfor %}
+            </select>
+    
+            <label for="student">Select Student:</label>
+            <select name="student_id">
+                {% for student in students %}
+                    <option value="{{ student.id }}">{{ student.student }}</option>
+                {% endfor %}
+            </select>
+    
+            <input type="hidden" name="course_id" value="{{ course.id }}">
+            
+            <button type="submit">Assign Teacher to Student</button>
+            <div >
+            {% for message in messages %}
+            {% if message %}
+            <label for="message" style="color: #1adb5a;text-align: center;">{{message}}</label>
+                {% endif %}
+            {% endfor %}
+        </div>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

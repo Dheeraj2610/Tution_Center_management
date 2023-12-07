@@ -1,0 +1,89 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Attendance</title>
+    <style media="screen">
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        button {
+            display: block;
+            margin: 0 auto; /* This centers the button */
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="{% url 'mark_teacher_attendance' %}">
+        {% csrf_token %}
+        <label for="attendance_date">Select Date:</label>
+        <input type="date" id="attendance_date" name="attendance_date" value="{{ selected_date|date:'Y-m-d' }}">
+        <br><br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Teacher Name</th>
+                    <th>Department</th>
+                    <th>Present</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                    <tr>
+                        <td>{{ teacher.teacher.first_name }}</td>
+                        <td>{{ teacher.department.dept_name }}</td>
+                        <td>
+                            <input type="radio" name="attendance_{{ teacher.id }}" value="present" {% if attendance_dict.teacher_id == teacher.id and attendance_dict.is_present %} checked {% endif %}> Present
+                            <input type="radio" name="attendance_{{ teacher.id }}" value="absent" {% if attendance_dict.teacher_id == teacher.id and not attendance_dict.is_present %} checked {% endif %}> Absent
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit">Submit Attendance</button>
+    </form>
+</body>
+</html>
+{% endblock %}

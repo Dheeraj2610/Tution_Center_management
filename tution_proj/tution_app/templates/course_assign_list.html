@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Details</title>
+</head>
+<h2>Members Assigned to Course: {{ course.cs_name }}</h2>
+
+<h3>Teachers:</h3>
+<ul>
+    {% for teacher in teachers %}
+        <li>
+            <strong>Name:</strong> {{ teacher.teacher.first_name }} {{ teacher.teacher.last_name }}<br>
+            <strong>Email:</strong> {{ teacher.teacher.email }}<br>
+            <strong>Address:</strong> {{ teacher.tr_address }}<br>
+            <!-- Display other teacher details as needed -->
+        </li>
+        <br>
+    {% endfor %}
+</ul>
+
+<h3>Students:</h3>
+<ul>
+    {% for student in students %}
+        <li>
+            <strong>Name:</strong> {{ student.student.first_name }} {{ student.student.last_name }}<br>
+            <strong>Email:</strong> {{ student.student.email }}<br>
+            <strong>Address:</strong> {{ student.Std_address }}<br>
+            <!-- Display other student details as needed -->
+        </li>
+        <br>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

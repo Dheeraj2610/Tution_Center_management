@@ -1,0 +1,55 @@
+{% extends 'teacher/teacher_base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Assignments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+           
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #444;
+            margin: 0;
+        }
+        p {
+            margin-top: 5px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Assignments List</h1>
+
+    <ul>
+        {% for assignment in assignments %}
+            <li>
+                <h2>{{ assignment.title }}</h2>
+                <p><strong>Description:</strong> {{ assignment.description }}</p>
+                <p><strong>Due Date:</strong> {{ assignment.due_date }}</p>
+                <!-- Add other assignment details as needed -->
+            </li>
+        {% empty %}
+            <p>No assignments available.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+{% endblock %}

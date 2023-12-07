@@ -1,0 +1,85 @@
+{% extends 'students/student_base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Assignments</title>
+    <style>
+        /* Add your CSS styles here */
+        /* For instance: */
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+           
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            overflow-x: auto; /* Enable horizontal scrolling for the table */
+            margin: 0 auto;
+        }
+        th, td {
+            border: 1px solid #413a3a;
+            text-align: left;
+            padding: 8px;
+            white-space: nowrap; /* Prevent text wrapping in cells */
+        }
+        th {
+            background-color: #79bed1;
+        }
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            white-space: nowrap; /* Prevent button wrapping on smaller screens */
+        }
+        
+        input[type="submit"] {
+            
+            background-color: #3498db; /* Change button background color */
+            color: white; /* Change button text color */
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #2980b9; /* Change button background color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div style="overflow-x:auto;">
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Due Date</th>
+                <th>File</th>
+                <th>Action</th>
+            </tr>
+            {% for assignment in assignments %}
+            <tr>
+                <td>{{ assignment.title }}</td>
+                <td>{{ assignment.description }}</td>
+                <td>{{ assignment.due_date }}</td>
+                <!-- <td>
+                    <input type="file" name="submitted_file_{{ assignment.id }}" accept="application/pdf">
+                </td> -->
+                
+                    <form method="post" action="{% url 'submit_assignment' assignment.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                       <td> <input type="file" name="submitted_file_{{ assignment.id }}" accept="application/pdf"></td>
+                        <td><input type="submit" value="Submit Assignment"></td >
+                    </form>
+                
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
+
+{% endblock %}

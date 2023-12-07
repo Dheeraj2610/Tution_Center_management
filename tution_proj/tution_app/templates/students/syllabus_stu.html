@@ -1,0 +1,50 @@
+{% extends 'students/student_base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Syllabus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            
+        }
+        .div-1 {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #c3c3c3;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        h3 {
+            margin-top: 20px;
+            color: #444;
+        }
+        h4 {
+            margin-top: 20px;
+            color: #555;
+        }
+        p {
+            color: #060505;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="div-1">
+        <h1>Course Syllabus</h1>
+        <h3>Course: {{ course.cs_name }}</h3>
+        <p><b>Duration:</b> {{ course.cs_duration }} months</p>
+        <p><b>Fees:</b> Rs.{{ course.cs_fee }}</p>
+        <p><b>syllabus:</b> {{ course.cs_syllabus }}</p>
+        <p>
+    </div>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+
+{% extends 'admin_base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+          
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 70%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: rgb(102, 150, 152);
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Attendance Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Date</th>
+                <th>Attendance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendance_details %}
+                <tr>
+                    <td>{{ attendance.student.student.first_name }}</td>
+                    <td>{{ attendance.date }}</td>
+                    <td>
+                        {% if attendance.is_present %}
+                            Present
+                        {% else %}
+                            Absent
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}
